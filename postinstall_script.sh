@@ -16,14 +16,14 @@ su - andromeda
 hostnamectl set-hostname milkyway
 
 
-##Changing ip address to static and configuring network adapter
+##Changing ip address to static and configuring network adapter (according to your network)
 sudo sed -i '/BOOTPROTO=dhcp/ c\BOOTPROTO=none' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '/PEERDNS=yes/ c\#PEERDNS=yes' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '/PEERROUTES=yes c\#PEERROUTES=yes' /etc/sysconfig/network-scripts/ifcfg-enp0s25
-sudo sed -i '$ a MACADDR=00:1C:C0:18:64:CB' /etc/sysconfig/network-scripts/ifcfg-enp0s25
-sudo sed -i '$ a IPADDR=192.168.0.10' /etc/sysconfig/network-scripts/ifcfg-enp0s25
+sudo sed -i '$ a MACADDR=00:00:00:00:00:00' /etc/sysconfig/network-scripts/ifcfg-enp0s25
+sudo sed -i '$ a IPADDR=192.168.1.10' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '$ a PREFIX=24' /etc/sysconfig/network-scripts/ifcfg-enp0s25
-sudo sed -i '$ a GATEWAY=192.168.0.1' /etc/sysconfig/network-scripts/ifcfg-enp0s25
+sudo sed -i '$ a GATEWAY=192.168.1.1' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '$ a DNS1=8.8.8.8' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '$ a DNS1=8.8.4.4' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '$ a DNS3=2001:4860:4860::8888' /etc/sysconfig/network-scripts/ifcfg-enp0s25
@@ -117,8 +117,8 @@ sudo sed -i '/PermitRootLogin yes/ c\PermitRootLogin no' /etc/ssh/sshd_config
 
 
 ##Git configuring (generate personal access token)
-git config --global user.email "vivekbhagat.1990@gmail.com"
-git config --global user.name "vksbhagat"
+git config --global user.email "email@gmail.com"
+git config --global user.name "username"
 
 # Set git to use the credential memory cache
 #git config --global credential.helper cache
