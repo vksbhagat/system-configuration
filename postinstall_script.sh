@@ -8,12 +8,12 @@
 
 
 ##Adding user to wheel group (sudo)
-su -c 'usermod -aG wheel andromeda'
+su -c 'usermod -aG wheel your-username'
 su - andromeda
 
 
 ##Changing default hostname
-hostnamectl set-hostname milkyway
+hostnamectl set-hostname your-hostname
 
 
 ##Changing ip address to static and configuring network adapter (according to your network)
