@@ -9,7 +9,7 @@
 
 ##Adding user to wheel group (sudo)
 su -c 'usermod -aG wheel your-username'
-su - andromeda
+su - your-username
 
 
 ##Changing default hostname
