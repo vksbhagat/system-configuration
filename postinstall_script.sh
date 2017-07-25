@@ -141,6 +141,8 @@ git config --global credential.helper store
 #    helper = cache --timeout 36000
 
 
+#Configuring Programming environment for Atom
+sudo pip install openpyxl lxml pillow python-docx
 #Installing kernel for Atom Hydrogan package
 python3 -m pip install ipykernel
 python3 -m ipykernel install --user
