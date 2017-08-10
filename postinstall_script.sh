@@ -2,30 +2,41 @@
 #
 #Encoding Unicode (UTF-8)
 #
-#Author
-#   Vivek Bhagat
 #GNU General Public Licence v3.0
 #Copyright (c) 2017 Vivek Bhagat
 #
+#
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 ##Adding user to wheel group (sudo)
-su -c 'usermod -aG wheel your-username'
-su - your-username
+su -c 'usermod -aG wheel andromeda'
+su - andromeda
 
 
 ##Changing default hostname
-hostnamectl set-hostname your-hostname
+hostnamectl set-hostname blackhole
 
 
-##Changing ip address to static and configuring network adapter (according to your network)
+##Changing ip address to static and configuring network adapter
 sudo sed -i '/BOOTPROTO=dhcp/ c\BOOTPROTO=none' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '/PEERDNS=yes/ c\#PEERDNS=yes' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '/PEERROUTES=yes c\#PEERROUTES=yes' /etc/sysconfig/network-scripts/ifcfg-enp0s25
-sudo sed -i '$ a MACADDR=00:00:00:00:00:00' /etc/sysconfig/network-scripts/ifcfg-enp0s25
-sudo sed -i '$ a IPADDR=192.168.1.10' /etc/sysconfig/network-scripts/ifcfg-enp0s25
+sudo sed -i '$ a MACADDR=00:1C:C0:18:64:CB' /etc/sysconfig/network-scripts/ifcfg-enp0s25
+sudo sed -i '$ a IPADDR=192.168.0.10' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '$ a PREFIX=24' /etc/sysconfig/network-scripts/ifcfg-enp0s25
-sudo sed -i '$ a GATEWAY=192.168.1.1' /etc/sysconfig/network-scripts/ifcfg-enp0s25
+sudo sed -i '$ a GATEWAY=192.168.0.1' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '$ a DNS1=8.8.8.8' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '$ a DNS1=8.8.4.4' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '$ a DNS3=2001:4860:4860::8888' /etc/sysconfig/network-scripts/ifcfg-enp0s25
@@ -36,15 +47,26 @@ systemctl restart network.service
 
 
 ##Creating rpmfusion (free and non-free) repo
-sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+
+##Creating EPEL repo
+cd ~/Downloads
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo dnf install epel-release-latest-7.noarch.rpm
+cd ~
 
 
 ##Creating paper (gtk and icon) theme repo
-sudo dnf config-manager --add-repo http://download.opensuse.org/repositories/home:snwh:paper/Fedora_25/home:snwh:paper.repo
+#for Fedora 26
+sudo dnf -y copr enable snwh/paper
+#
+#for Fedora 25
+#sudo dnf config-manager --add-repo http://download.opensuse.org/repositories/home:snwh:paper/Fedora_25/home:snwh:paper.repo
 
 
 ##Creating genome shell extension repo
-sudo dnf copr enable region51/chrome-gnome-shell
+sudo dnf -y copr enable region51/chrome-gnome-shell
 
 
 ##Creating gnome pomodoro repo
@@ -54,20 +76,19 @@ cd ~
 
 
 ##Creating docker repo
-sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-sudo dnf makecache fast
+sudo dnf -y config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+#sudo dnf makecache fast
 
 
 ##Creating cert forensic repo
 cd ~/Downloads
-sudo wget https://forensics.cert.org/cert-forensics-tools-release-25.rpm
-sudo dnf install cert-forensics-tools-release-25.rpm
+sudo wget https://forensics.cert.org/cert-forensics-tools-release-26.rpm
+sudo dnf -y install cert-forensics-tools-release-26.rpm
 cd ~
 
 
-##Updating system to the latest version
-sudo dnf -y update
-
+##Creating Adobe flash player repo
+sudo dnf -y install ~/Downloads/adobe-release-x86_64-1.0-1.noarch.rpm
 
 ##Changing the no of installed kernel parameter
 sudo sed -i '/installonly_limit=3/ c\installonly_limit=2' /etc/dnf/dnf.conf
@@ -77,16 +98,25 @@ sudo sed -i '/installonly_limit=3/ c\installonly_limit=2' /etc/dnf/dnf.conf
 #package-cleanup --oldkernels --count=2
 
 
+##Updating system to the latest version
+sudo dnf -y update
+
+
 ##Installing applications
 sudo dnf -y install vim
 sudo dnf -y install terminator
 sudo dnf -y install gnome-tweak-tool
+sudo dnf -y install thunderbird
 sudo dnf -y install chrome-gnome-shell
 sudo dnf -y install dconf-editor
 sudo dnf -y install flash-plugin
 sudo dnf -y install vlc
+sudo dnf -y install tor
+sudo dnf -y install torbrowser-launcher
+torbrowser-launcher
 sudo dnf -y install tomahawk
 sudo dnf -y install youtube-dl
+sudo pip3 install mps-youtube dbus-python pygobject
 sudo dnf -y install bleachbit
 sudo dnf -y install paper-gtk-theme
 sudo dnf -y install paper-icon-theme
@@ -95,18 +125,40 @@ sudo dnf -y install google-authenticator
 sudo dnf -y install libcurl
 sudo dnf -y install wget
 sudo dnf -y install gnome-pomodoro
-sudo dnf -i install docker-ce
-sudo dnf -y install ~/downloads/adobe-release-x86_64-1.0-1.noarch.rpm
+sudo dnf -y install tlp tlp-rdw
+sudo dnf -y install smartmontools
+sudo dnf -i install docker
+#sudo dnf -y install ~/downloads/adobe-release-x86_64-1.0-1.noarch.rpm
 sudo dnf -y install ~/Downloads/atom.x86_64.rpm
 sudo dnf -y install ~/Downloads/google-chrome-stable_current_x86_64.rpm
 sudo dnf -y install zlib.i686 ncurses-libs.i686 bzip2-libs.i686 compat-libstdc++-296 compat-libstdc++-33 glibc libgcc nss-softokn-freebl libstdc++ ant
 /usr/local/android-studio/bin/./studio.sh
+#lspci -nnk |grep -A 3 -i vga
+sudo dnf install xorg-x11-drv-amdgpu.x86_64
 #sudo dnf -y install winehq
 
+##Manually starting tlp
+sudo tlp start
+sudo systemctl start tlp.service
+sudo systemctl start tlp-sleep.service
+sudo systemctl enable tlp.service
+sudo systemctl enable tlp-sleep.service
+sudo systemctl enable NetworkManager-dispatcher.service
+#maskin the following service to avoid conflicts and assure proper operation of TLP's radio device switching option
+sudo systemctl mask systemd-rfkill.service
+
+##Manually start docker
+sudo systemctl start docker
+sudo systemctl enable docker
+
+##Configuring netwok bonding
+
+#Loding kernel bonding module
+sudo modprobe --first-time bonding
 
 ##Configuring google two factor authentication and pam.d/gdm-password
-google-authenticator
-sudo sed -i '$ a auth required pam_google_authenticator.so' /etc/pam.d/gdm-password
+#google-authenticator
+#sudo sed -i '$ a auth required pam_google_authenticator.so' /etc/pam.d/gdm-password
 
 
 ##Configuring ssh for two factor authentication
@@ -119,10 +171,10 @@ sudo sed -i '/PermitRootLogin yes/ c\PermitRootLogin no' /etc/ssh/sshd_config
 
 
 ##Git configuring (generate personal access token)
-git config --global user.email "email@gmail.com"
-git config --global user.name "username"
+git config --global user.email "vivekbhagat.1990@gmail.com"
+git config --global user.name "vksbhagat"
 
-# Set git to use the credential memory cache
+#Set git to use the credential memory cache
 #git config --global credential.helper cache
 
 # Set the cache to timeout after 1 hour (setting is in seconds)
@@ -141,8 +193,9 @@ git config --global credential.helper store
 #    helper = cache --timeout 36000
 
 
-#Configuring Programming environment for Atom
+##Configuring Programming environment for Atom
 sudo pip install openpyxl lxml pillow python-docx
 #Installing kernel for Atom Hydrogan package
-python3 -m pip install ipykernel
-python3 -m ipykernel install --user
+sudo python3 -m pip install ipykernel
+sudo python3 -m ipykernel install --user
+sudo pip3 install jupyter
