@@ -177,8 +177,8 @@ sudo sed -i '/PermitRootLogin yes/ c\PermitRootLogin no' /etc/ssh/sshd_config
 
 
 ##Git configuring (generate personal access token)
-git config --global user.email "vivekbhagat.1990@gmail.com"
-git config --global user.name "vksbhagat"
+git config --global user.email "Your email address"
+git config --global user.name "your github username"
 
 #Set git to use the credential memory cache
 #git config --global credential.helper cache
