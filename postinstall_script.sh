@@ -21,8 +21,8 @@
 
 
 ##Adding user to wheel group (sudo)
-su -c 'usermod -aG wheel andromeda'
-su - andromeda
+su -c 'usermod -aG wheel username'
+su - username
 
 
 ##Changing default hostname
@@ -33,10 +33,10 @@ hostnamectl set-hostname blackhole
 sudo sed -i '/BOOTPROTO=dhcp/ c\BOOTPROTO=none' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '/PEERDNS=yes/ c\#PEERDNS=yes' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '/PEERROUTES=yes c\#PEERROUTES=yes' /etc/sysconfig/network-scripts/ifcfg-enp0s25
-sudo sed -i '$ a MACADDR=00:1C:C0:18:64:CB' /etc/sysconfig/network-scripts/ifcfg-enp0s25
-sudo sed -i '$ a IPADDR=192.168.0.10' /etc/sysconfig/network-scripts/ifcfg-enp0s25
+sudo sed -i '$ a MACADDR=Your mac address' /etc/sysconfig/network-scripts/ifcfg-enp0s25
+sudo sed -i '$ a IPADDR=Your IP address' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '$ a PREFIX=24' /etc/sysconfig/network-scripts/ifcfg-enp0s25
-sudo sed -i '$ a GATEWAY=192.168.0.1' /etc/sysconfig/network-scripts/ifcfg-enp0s25
+sudo sed -i '$ a GATEWAY=Your gateway' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '$ a DNS1=8.8.8.8' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '$ a DNS1=8.8.4.4' /etc/sysconfig/network-scripts/ifcfg-enp0s25
 sudo sed -i '$ a DNS3=2001:4860:4860::8888' /etc/sysconfig/network-scripts/ifcfg-enp0s25
@@ -90,6 +90,11 @@ cd ~
 ##Creating Adobe flash player repo
 sudo dnf -y install ~/Downloads/adobe-release-x86_64-1.0-1.noarch.rpm
 
+
+##Creating Etcher repo
+sudo wget https://bintray.com/resin-io/redhat/rpm -O /etc/yum.repos.d/bintray-resin-io-redhat.repo
+
+
 ##Changing the no of installed kernel parameter
 sudo sed -i '/installonly_limit=3/ c\installonly_limit=2' /etc/dnf/dnf.conf
 #Removing old kernels
@@ -124,6 +129,7 @@ sudo dnf -y install ffmpeg
 sudo dnf -y install google-authenticator
 sudo dnf -y install libcurl
 sudo dnf -y install wget
+sudo dnf install -y etcher-electron
 sudo dnf -y install gnome-pomodoro
 sudo dnf -y install tlp tlp-rdw
 sudo dnf -y install smartmontools
