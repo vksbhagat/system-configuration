@@ -121,6 +121,7 @@ sudo dnf -y install torbrowser-launcher
 torbrowser-launcher
 sudo dnf -y install tomahawk
 sudo dnf -y install youtube-dl
+sudo dnf -y install kde-connect
 sudo pip3 install mps-youtube dbus-python pygobject
 sudo dnf -y install bleachbit
 sudo dnf -y install paper-gtk-theme
