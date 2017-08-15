@@ -136,6 +136,7 @@ sudo dnf -y install smartmontools
 sudo dnf -y install docker
 sudo dnf -y install android-tools
 sudo dnf -y install heimdall
+sudo dnf -y install heimdall-frontend
 #sudo dnf -y install ~/downloads/adobe-release-x86_64-1.0-1.noarch.rpm
 sudo dnf -y install ~/Downloads/atom.x86_64.rpm
 sudo dnf -y install ~/Downloads/google-chrome-stable_current_x86_64.rpm
