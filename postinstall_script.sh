@@ -133,14 +133,16 @@ sudo dnf install -y etcher-electron
 sudo dnf -y install gnome-pomodoro
 sudo dnf -y install tlp tlp-rdw
 sudo dnf -y install smartmontools
-sudo dnf -i install docker
+sudo dnf -y install docker
+sudo dnf -y install android-tools
+sudo dnf -y install heimdall
 #sudo dnf -y install ~/downloads/adobe-release-x86_64-1.0-1.noarch.rpm
 sudo dnf -y install ~/Downloads/atom.x86_64.rpm
 sudo dnf -y install ~/Downloads/google-chrome-stable_current_x86_64.rpm
 sudo dnf -y install zlib.i686 ncurses-libs.i686 bzip2-libs.i686 compat-libstdc++-296 compat-libstdc++-33 glibc libgcc nss-softokn-freebl libstdc++ ant
 /usr/local/android-studio/bin/./studio.sh
 #lspci -nnk |grep -A 3 -i vga
-sudo dnf install xorg-x11-drv-amdgpu.x86_64
+sudo dnf -y install xorg-x11-drv-amdgpu.x86_64
 #sudo dnf -y install winehq
 
 ##Manually starting tlp
