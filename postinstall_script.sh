@@ -75,6 +75,14 @@ sudo wget http://download.opensuse.org/repositories/home:kamilprusko/Fedora_25/h
 cd ~
 
 
+##Creating cupscloudprint (Google cloud print) repo
+sudo sed -i '$ a [niftyrepo]' /etc/yum.repos.d/niftyrepo.repo
+sudo sed -i '$ a name=niftyrepo' /etc/yum.repos.d/niftyrepo.repo
+sudo sed -i '$ a baseurl=https://niftyrepo.niftiestsoftware.com/rpm/' /etc/yum.repos.d/niftyrepo.repo
+sudo sed -i '$ a gpgcheck=1' /etc/yum.repos.d/niftyrepo.repo
+sudo sed -i '$ a gpgkey=https://niftyrepo.niftiestsoftware.com/rpm/RPM-GPG-KEY-niftiestsoftware' /etc/yum.repos.d/niftyrepo.repo
+
+
 ##Creating docker repo
 sudo dnf -y config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 #sudo dnf makecache fast
@@ -130,11 +138,13 @@ sudo dnf -y install ffmpeg
 sudo dnf -y install google-authenticator
 sudo dnf -y install libcurl
 sudo dnf -y install wget
-sudo dnf install -y etcher-electron
+sudo dnf -y install etcher-electron
 sudo dnf -y install gnome-pomodoro
 sudo dnf -y install tlp tlp-rdw
 sudo dnf -y install smartmontools
 sudo dnf -y install docker
+sudo dnf -y install python-cups
+sudo dnf -y install cupscloudprint
 sudo dnf -y install android-tools
 sudo dnf -y install heimdall
 sudo dnf -y install heimdall-frontend
@@ -146,6 +156,7 @@ sudo dnf -y install zlib.i686 ncurses-libs.i686 bzip2-libs.i686 compat-libstdc++
 #lspci -nnk |grep -A 3 -i vga
 sudo dnf -y install xorg-x11-drv-amdgpu.x86_64
 #sudo dnf -y install winehq
+
 
 ##Manually starting tlp
 sudo tlp start
@@ -161,14 +172,16 @@ sudo systemctl mask systemd-rfkill.service
 sudo systemctl start docker
 sudo systemctl enable docker
 
+
 ##Configuring netwok bonding
 
+
 #Loding kernel bonding module
-sudo modprobe --first-time bonding
+#sudo modprobe --first-time bonding
 
 ##Configuring google two factor authentication and pam.d/gdm-password
-#google-authenticator
-#sudo sed -i '$ a auth required pam_google_authenticator.so' /etc/pam.d/gdm-password
+google-authenticator
+sudo sed -i '$ a auth required pam_google_authenticator.so' /etc/pam.d/gdm-password
 
 
 ##Configuring ssh for two factor authentication
@@ -178,6 +191,10 @@ sudo sed -i '$ a auth required pam_google_authenticator.so' /etc/pam.d/sshd
 sudo sed -i '/ChallengeResponseAuthentication no/ c\#ChallengeResponseAuthentication no' /etc/ssh/sshd_config
 sudo sed -i '/#ChallengeResponseAuthentication yes/ c\ChallengeResponseAuthentication yes' /etc/ssh/sshd_config
 sudo sed -i '/PermitRootLogin yes/ c\PermitRootLogin no' /etc/ssh/sshd_config
+
+
+##Configuring cupscloudprint
+sudo /usr/share/cloudprint-cups/setupcloudprint.py
 
 
 ##Git configuring (generate personal access token)
